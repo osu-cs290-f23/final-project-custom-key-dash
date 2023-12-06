@@ -1,4 +1,10 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
+const randomWords = require("./randomWords.json")
+const leaderboard = require("./leaderboard.json")
+
+
+
 const app = express()
 const port = 8080
 
@@ -17,3 +23,6 @@ app.get('/', function(req, res) {
 app.listen(port, function() {
   console.log(`Example app listening on port ${port}`)
 })
+
+console.log(randomWords[2])
+console.log(leaderboard[1])
