@@ -3,5 +3,14 @@
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "scripts": {
+    "prestart": "",
+    "start": "node server.js",
+    "predev": "npm run prestart",
+    "dev": "nodemon server.js"
   }
 }
