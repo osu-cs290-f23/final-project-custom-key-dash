@@ -8,6 +8,28 @@ const leaderboard = require("./leaderboard.json")
 const app = express()
 const port = 8080
 
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+  }
+  
+
+function generatePrompt()
+{
+    var len = randomWords.length
+    var outputString = ""
+    for(var i = 0; i < 100; i++)
+    {
+        var index = getRandomIntInclusive(0, len - 1)
+        if(i != 0)
+            outputString += " "
+        outputString += randomWords[index]
+
+    }
+    return outputString
+}
+
 
 
 app.get('/leaderboard', function(req, res){
@@ -23,6 +45,3 @@ app.get('/', function(req, res) {
 app.listen(port, function() {
   console.log(`Example app listening on port ${port}`)
 })
-
-console.log(randomWords[2])
-console.log(leaderboard[1])
