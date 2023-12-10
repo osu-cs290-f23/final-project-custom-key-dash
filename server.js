@@ -8,43 +8,37 @@ const path = require('path')
 const app = express()
 const port = 3000
 
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-  }
-  
-
-function generatePrompt()
-{
-    var len = randomWords.length
-    var outputString = ""
-    for(var i = 0; i < 100; i++)
-    {
-        var index = getRandomIntInclusive(0, len - 1)
-        if(i != 0)
-            outputString += " "
-        outputString += randomWords[index]
-
-    }
-    return outputString
-}
+app.engine("handlebars", exphbs.engine({defaultLayout: null}))
+app.set("view engine", "handlebars")
 
 app.use(express.json())
-
 app.use(express.static('public'))
 
+
+app.get('/', function(req, res, next){
+  res.status(200).render("main")
+})
+
 app.get('/leaderboard', (req, res) => {
+  res.status(200).render("leaderboard")
+})
+
+app.get('/leaderboardData', (req, res) => {
   try {
     var leaderboardData = getLeaderboardData()
     res.json(leaderboardData)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Internal Server Error' })
-  }
+  }})
+
+app.get('/new-string', function(req, res, next)
+{
+  output = {prompt: generatePrompt()}
+  res.status(200).send(output)
 })
 
-app.post('/leaderboard', (req, res) => {
+app.post('/leaderboardData', (req, res) => {
   try {
     var newEntry = req.body
     var leaderboardData = getLeaderboardData()
@@ -56,6 +50,10 @@ app.post('/leaderboard', (req, res) => {
     console.error(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
+})
+
+app.get('*', function(req, res, next){
+  res.status(404).render("404")
 })
 
 var leaderboardFilePath = path.join(__dirname, 'leaderboard.json')
@@ -81,6 +79,28 @@ function saveLeaderboardData(data) {
   } catch (error) {
     console.error(error)
   }
+}
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+
+
+function generatePrompt()
+{
+  var len = randomWords.length
+  var outputString = ""
+  for(var i = 0; i < 100; i++)
+  {
+      var index = getRandomIntInclusive(0, len - 1)
+      if(i != 0)
+          outputString += " "
+      outputString += randomWords[index]
+
+  }
+  return outputString
 }
 
 app.listen(port, () => {
