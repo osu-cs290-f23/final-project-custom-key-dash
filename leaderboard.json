@@ -1,10 +1,32 @@
 [
-    {
-        "name": "John Smith",
-        "score": "123"
-    },
-    {
-        "name": "TYPING_GOD",
-        "score": "122"
-    }
+  {
+    "name": "anonymousplayer41264",
+    "score": 155,
+    "date": "9-12-2023 21:52:5"
+  },
+  {
+    "name": "test",
+    "score": 184,
+    "date": "9-12-2023 21:52:12"
+  },
+  {
+    "name": "anonymousplayer41264",
+    "score": 115,
+    "date": "9-12-2023 21:57:38"
+  },
+  {
+    "name": "test",
+    "score": 145,
+    "date": "9-12-2023 22:26:45"
+  },
+  {
+    "name": "daniel",
+    "score": 23,
+    "date": "9-12-2023 22:55:25"
+  },
+  {
+    "name": "daniel",
+    "score": 38,
+    "date": "9-12-2023 23:17:9"
+  }
 ]

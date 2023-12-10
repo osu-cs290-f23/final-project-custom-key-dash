@@ -1,12 +1,12 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const randomWords = require("./randomWords.json")
-const leaderboard = require("./leaderboard.json")
-
+const fs = require('fs')
+const path = require('path')
 
 
 const app = express()
-const port = 8080
+const port = 3000
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -30,18 +30,59 @@ function generatePrompt()
     return outputString
 }
 
+app.use(express.json())
 
+app.use(express.static('public'))
 
-app.get('/leaderboard', function(req, res){
-    //This will get converted to the leaderboard handlebars when its configured
-    res.send('Leaderboard')
+app.get('/leaderboard', (req, res) => {
+  try {
+    var leaderboardData = getLeaderboardData()
+    res.json(leaderboardData)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
 })
 
-app.get('/', function(req, res) {
-    //This will get converted to the main page handlebars when its configured
-    res.send('Hello, world')
+app.post('/leaderboard', (req, res) => {
+  try {
+    var newEntry = req.body
+    var leaderboardData = getLeaderboardData()
+    leaderboardData.push(newEntry)
+    saveLeaderboardData(leaderboardData);
+    console.log('leaderboard updated successfully')
+    res.json({ success: true })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
 })
 
-app.listen(port, function() {
-  console.log(`Example app listening on port ${port}`)
-})
+var leaderboardFilePath = path.join(__dirname, 'leaderboard.json')
+
+function getLeaderboardData() {
+  try {
+    var data = fs.readFileSync(leaderboardFilePath, 'utf8')
+
+    if (!data.trim()) {
+      return []
+    }
+
+    return JSON.parse(data)
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+function saveLeaderboardData(data) {
+  try {
+    fs.writeFileSync(leaderboardFilePath, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+app.listen(port, () => {
+  console.log(`Server running on localhost:${port}`)
+});
