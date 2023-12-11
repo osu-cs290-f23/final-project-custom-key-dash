@@ -1,46 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
-    <title>Leaderboard</title>
-</head>
-<body>
-    <div class="entryData-container">
-        <form id="leaderboardForm">
-            <label for="name">Enter Name:</label>
-            <input type="text" id="name" required>
-            <input type="text" id="score" required>
-            <button type="button" onclick="getRandScore()">Generate Random Score</button>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="index.js" charset="utf-8" defer></script>
+    </head>
+    <body>
 
-            <button type="button" onclick="updateLeaderboard()">Submit Score</button>
-        </form>
-    </div>
-
-    <div id="leaderboard">
-        <h1>Leaderboard</h1>
-
-    </div>
-
-    <div class="leaderboard-container">
+        <div id="test-container">
+            <div id="test-title">
+                Title
+            </div>
+            <div id="test-box">
+                <div id="test-text" >
+                    <span id="correct"></span><span id="incorrect"></span><span id="unattempted"></span>
+                </div>
+            </div>
+            <button id="replay-button">Replay</button>
+        </div>
         
-        <table id="leaderboard">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>WPM</th>
-                    <th>Date | Time</th>
-                </tr>
-            </thead>
-            <tbody>
-    
-            </tbody>
-        </table>
-    </div>
 
+    </body>
 
-    <script src="leaderboard.js"></script>
-</body>
 </html>

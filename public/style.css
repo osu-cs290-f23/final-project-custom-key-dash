@@ -1,0 +1,44 @@
+
+#test-container{
+    margin: auto;
+    /* border: 1px solid black; */
+    text-align: center;
+}
+
+#test-title{
+    font-size: 30px;
+}
+
+#test-box{
+    width: 600px;
+    height: auto;
+    margin: auto;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: rgb(3, 43, 67);
+    background-color: rgb(3, 43, 67);
+}
+
+#test-text{
+    font-family: monospace;
+    font-size: 20px;
+    padding: 30px;
+    text-align: justify;
+}
+
+#unattempted{
+    color: rgb(255, 186, 8);
+    text-shadow: rgb(205, 136, 0) 2px
+}
+
+#correct{
+    color: rgb(19, 111, 99);
+    font-weight: bold;
+}
+
+#incorrect{
+    color: rgb(208, 0, 0);
+    text-decoration: underline;
+}
+
+

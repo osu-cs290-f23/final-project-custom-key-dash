@@ -1,12 +1,14 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const randomWords = require("./randomWords.json")
-const fs = require('fs')
-const path = require('path')
+// const randomWords = require("./randomWords.json")
+const commonWords = require("./commonWords.json")
+const leaderboard = require("./leaderboard.json")
+
+
 
 
 const app = express()
-const port = 3000
+const port = 8080
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
@@ -17,72 +19,36 @@ function getRandomIntInclusive(min, max) {
 
 function generatePrompt()
 {
-    var len = randomWords.length
+    var len = commonWords.length
     var outputString = ""
     for(var i = 0; i < 100; i++)
     {
         var index = getRandomIntInclusive(0, len - 1)
         if(i != 0)
             outputString += " "
-        outputString += randomWords[index]
+        outputString += commonWords[index]
 
     }
     return outputString
 }
 
-app.use(express.json())
-
 app.use(express.static('public'))
 
-app.get('/leaderboard', (req, res) => {
-  try {
-    var leaderboardData = getLeaderboardData()
-    res.json(leaderboardData)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
+app.get('/new-string', function(req, res, next){
+  output = {prompt: generatePrompt()}
+  res.status(200).send(output)
 })
 
-app.post('/leaderboard', (req, res) => {
-  try {
-    var newEntry = req.body
-    var leaderboardData = getLeaderboardData()
-    leaderboardData.push(newEntry)
-    saveLeaderboardData(leaderboardData);
-    console.log('leaderboard updated successfully')
-    res.json({ success: true })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
+app.get('/leaderboard', function(req, res){
+    //This will get converted to the leaderboard handlebars when its configured
+    res.send('Leaderboard')
 })
 
-var leaderboardFilePath = path.join(__dirname, 'leaderboard.json')
+app.get('/', function(req, res) {
+    //This will get converted to the main page handlebars when its configured
+    res.send('Hello, world')
+})
 
-function getLeaderboardData() {
-  try {
-    var data = fs.readFileSync(leaderboardFilePath, 'utf8')
-
-    if (!data.trim()) {
-      return []
-    }
-
-    return JSON.parse(data)
-  } catch (error) {
-    console.error(error)
-    return []
-  }
-}
-
-function saveLeaderboardData(data) {
-  try {
-    fs.writeFileSync(leaderboardFilePath, JSON.stringify(data, null, 2), 'utf8')
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-app.listen(port, () => {
-  console.log(`Server running on localhost:${port}`)
-});
+app.listen(port, function() {
+  console.log(`Example app listening on port ${port}`)
+})
