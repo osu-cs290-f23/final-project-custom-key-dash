@@ -1,0 +1,280 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  color:white;
+  margin: 0;
+  background-color:darkslategray;
+}
+
+header {
+  background-color: darkslateblue;
+  text-align:center;
+  position: relative;
+}
+
+.site-title {
+  font-family: "Roboto Slab", serif;
+  font-size: 80px;
+  font-weight: 100;
+  margin: 0 0 0 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.site-title a:hover {
+  text-decoration: none;
+}
+
+#main-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 20px;
+}
+#test-container {
+  flex: 6;
+  min-width: 650px;
+  height: 400px;
+  margin: 20px;
+  margin-left: 50px;
+  font-family: monospace;
+  overflow: scroll;
+}
+
+#test-title {
+  width: 40%;
+  height: 10%;
+  margin: auto;
+  text-align:center;
+}
+
+#test-box{
+  width: 90%;
+  height: 75%;
+  margin: 10px auto;
+  padding:8px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: darkslateblue;
+  font-size: 20px;
+}
+
+#correct{
+  color:green;
+}
+#incorrect{
+  color:red;
+}
+
+#custom-tests{
+  display: block;
+}
+
+#sidebar {
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+  height: 400px;
+  flex: 1 200px;
+  margin-right: 50px;
+}
+
+.action-button {
+  width: 185px;
+  font-size: 20px;
+  color: white;
+  padding: 10px;
+  background-color: darkslateblue;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.action-button:hover{
+  background-color: mediumslateblue;
+}
+
+#custom-tests{
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.custom-test-box{
+  width: 350px;
+  height: 250px;
+  margin: 20px;
+}
+
+.custom-test-title {
+  text-align: center;
+  cursor: pointer;
+}
+
+.custom-test-text{
+  padding: 7px;
+  background-color:darkslateblue;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+#modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+#custom-test-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1010;
+  overflow: scroll;
+}
+
+.hidden {
+  display: none;
+}
+
+#modal-content {
+     width: 650px;
+     height: 575px;
+     margin: 40px auto;
+     background-color: darkslategray;
+     border: 5px solid black;
+     border-radius: 5px;
+}
+
+#modal-header {
+  position: relative;
+  padding: 10px 20px;
+  
+}
+
+#modal-header h3 {
+  margin: 0;
+  font-size: 28px;
+}
+
+#modal-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.custom-test-input {
+  display: block;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.custom-test-input > label {
+  font-weight: 600;
+  margin: 10px;
+}
+
+#title-input {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #aaa;
+  background-color:darkslateblue;
+  color:white;
+}
+
+#custom-test-body {
+  height: 300px;
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 8px;
+  font-size: 20px;
+  border: 1px solid #aaa;
+  background-color: darkslateblue;
+  color: white;
+}
+
+#modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 10px 20px 10px;
+}
+
+#modal-cancel,
+#modal-accept {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin:auto;
+}
+
+#leaderboard-title {
+     text-align:center;
+}
+
+#leaderboard {
+     width: 600px;
+     padding-left: 20px;
+     border-collapse: collapse;
+     margin: 10px auto;
+     border: 2px solid black;
+     border-radius: 5px;
+     overflow: hidden;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+     padding: 8px;
+     text-align: left;
+     border-bottom: 1px solid black;
+}
+
+th {
+     background-color: darkslateblue;
+     color: #fff;
+}
+
+tr{
+    background-color: darkslateblue;
+}
+
+tr:hover {
+     background-color: mediumslateblue;
+}
+
+#return-button{
+    display: block;
+    margin: 30px auto;
+}
+#error-message {
+  font-family: "Roboto Slab", serif;
+  text-align: center;
+}
+
+#error-message h2{
+     font-size: 128px;
+     margin-top: 50px;
+     margin-bottom: 0;
+}
+
+#error-message h3 {
+     font-size: 32px;
+     margin: 0;
+}
