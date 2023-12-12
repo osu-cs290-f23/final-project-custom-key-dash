@@ -112,6 +112,10 @@ header {
   cursor: pointer;
 }
 
+.custom-test-title:hover{
+  color:mediumslateblue;
+}
+
 .custom-test-text{
   padding: 7px;
   background-color:darkslateblue;
