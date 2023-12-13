@@ -45,10 +45,6 @@ app.get('/new-string', function(req, res, next){
   res.status(200).send(output)
 })
 
-app.get('/leaderboard', function(req, res){
-    //This will get converted to the leaderboard handlebars when its configured
-    res.send('Leaderboard')
-})
 
 app.post('/leaderboardData', (req, res) => {
   try {
