@@ -10,7 +10,7 @@ const leaderboard = require("./leaderboard.json")
 
 
 const app = express()
-const port = 8080
+const port = 3000
 
 app.engine("handlebars", exphbs.engine({defaultLayout: null}))
 app.set("view engine", "handlebars")
