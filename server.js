@@ -36,14 +36,9 @@ app.get('/leaderboardData', (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }})
 
-app.get('/new-string', function(req, res, next)
-{
-  output = {prompt: generatePrompt()}
-  res.status(200).send(output)
 //POST to leaderboard won't work without this for some reason
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-})
 
 app.get('/new-string', function(req, res, next){
   output = {prompt: generatePrompt()}
