@@ -1,4 +1,4 @@
-var serverUrl = 'http://localhost:3000/leaderboard'
+var serverUrl = 'http://localhost:3000/leaderboardData'
 
 function getRandScore() {
     var randScore = Math.floor(Math.random() * 220) + 1
