@@ -1,12 +1,16 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const randomWords = require("./randomWords.json")
 const fs = require('fs')
 const path = require('path')
+const bodyParser = require('body-parser');
+// const randomWords = require("./randomWords.json")
+const commonWords = require("./commonWords.json")
+const leaderboard = require("./leaderboard.json")
+
 
 
 const app = express()
-const port = 3000
+const port = 8080
 
 app.engine("handlebars", exphbs.engine({defaultLayout: null}))
 app.set("view engine", "handlebars")
@@ -38,6 +42,22 @@ app.get('/new-string', function(req, res, next)
   res.status(200).send(output)
 })
 
+app.use(express.static('public'))
+
+//POST to leaderboard won't work without this for some reason
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.get('/new-string', function(req, res, next){
+  output = {prompt: generatePrompt()}
+  res.status(200).send(output)
+})
+
+app.get('/leaderboard', function(req, res){
+    //This will get converted to the leaderboard handlebars when its configured
+    res.send('Leaderboard')
+})
+
 app.post('/leaderboardData', (req, res) => {
   try {
     var newEntry = req.body
@@ -45,15 +65,20 @@ app.post('/leaderboardData', (req, res) => {
     leaderboardData.push(newEntry)
     saveLeaderboardData(leaderboardData);
     console.log('leaderboard updated successfully')
-    res.json({ success: true })
+    res.status(200).json({ success: true })
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
 
-app.get('*', function(req, res, next){
-  res.status(404).render("404")
+app.get('/', function(req, res) {
+    //This will get converted to the main page handlebars when its configured
+    res.send('Hello, world')
+})
+
+app.listen(port, function() {
+  console.log(`Example app listening on port ${port}`)
 })
 
 var leaderboardFilePath = path.join(__dirname, 'leaderboard.json')
