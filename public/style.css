@@ -65,6 +65,10 @@ header {
   color:red;
 }
 
+#test-results{
+  text-align:center;
+}
+
 #custom-tests{
   display: block;
 }
