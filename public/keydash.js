@@ -18,6 +18,8 @@ var numIncorrectKeys = 0
 var testFinished = false
 
 function generateDefaultTest(){
+    defaultTest = true
+    testTitle.textContent = "Default Test"
     fetch("/new-string")
         .then(res => res.json())
         .then(data => {testString = data.prompt})
@@ -50,8 +52,6 @@ function resetTestElements(){
 }
 
 function replayDefaultTest(){
-    defaultTest = true
-    testTitle.textContent = "Default Test"
     generateDefaultTest()
     resetTestElements()
 }
@@ -172,10 +172,10 @@ function testUpdate(event){
 }
 
 window.addEventListener("keydown",function (event){
-    if (event.code === 'Space') {
-        event.preventDefault();
-    }
     if(isMouseTestHover){
+        if (event.code === 'Space') {
+            event.preventDefault();
+        }
         testUpdate(event)
     }
 })
@@ -260,23 +260,27 @@ function handleModalAccept(){
     var title = titleInput.value.trim()
     var content = customTestBody.value.trim()
     if(title && content){
-        fetch('/custom-tests',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title: title,
-                content: content
+        if(content.length < 2){
+            alert("Test cannot be a single character.")
+        } else {
+            fetch('/custom-tests',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    content: content
+                })
+            }).then(function(){
+                addCustomTest(title,content)
+            }).then(function(){
+                closeCustomTestModal()
             })
-        }).then(function(){
-            addCustomTest(title,content)
-        }).then(function(){
-            closeCustomTestModal()
-        })
-        .catch(err =>{
-            alert("Error submitting test")
-        })
+            .catch(err =>{
+                alert("Error submitting test")
+            })
+        }
     }else{
         alert("Missing input(s)")
     }
