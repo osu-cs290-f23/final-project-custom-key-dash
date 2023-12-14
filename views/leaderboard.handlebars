@@ -7,7 +7,8 @@
     <title>Leaderboard</title>
 </head>
 <body>
-    <div class="entryData-container">
+    
+    {{!-- <div class="entryData-container">
         <form id="leaderboardForm">
             <label for="name">Enter Name:</label>
             <input type="text" id="name" required>
@@ -16,7 +17,7 @@
 
             <button type="button" onclick="updateLeaderboard()">Submit Score</button>
         </form>
-    </div>
+    </div> --}}
 
     <div id="leaderboard-title">
         <h1>Leaderboard</h1>
@@ -40,7 +41,7 @@
         </table>
     </div>
     
-    <button id="return-button" class="action-button">Return to Main Page</id="return-button"button>
+    <a id="return-link" href="/"><button id="return-button" class="action-button">Return to Main Page</button></a>
 
     <script src="leaderboard.js"></script>
 </body>

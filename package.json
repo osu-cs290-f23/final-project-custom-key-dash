@@ -12,9 +12,10 @@
     "nodemon": "^3.0.2"
   },
   "scripts": {
-    "prestart": "",
+    "prestart": "npm run build",
     "start": "node server.js",
     "predev": "npm run prestart",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "handlebars views/partials/customTest.handlebars -f public/customTestTemplate.js"
   }
 }

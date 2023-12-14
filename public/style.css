@@ -37,7 +37,6 @@ header {
   margin: 20px;
   margin-left: 50px;
   font-family: monospace;
-  overflow: scroll;
 }
 
 #test-title {
@@ -56,6 +55,8 @@ header {
   border-radius: 5px;
   background-color: darkslateblue;
   font-size: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 #correct{
@@ -93,6 +94,7 @@ header {
   border-radius: 5px;
   font-weight: lighter;
   cursor: pointer;
+
 }
 
 .action-button:hover{
@@ -267,6 +269,9 @@ tr:hover {
      background-color: mediumslateblue;
 }
 
+#return-link{
+  text-decoration: none;
+}
 #return-button{
     display: block;
     margin: 30px auto;

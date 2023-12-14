@@ -60,6 +60,30 @@ app.post('/leaderboardData', (req, res) => {
   }
 })
 
+app.get('/custom-tests', (req, res) =>{
+  try {
+    var customTestData = getCustomTestData()
+    res.status(200).json(customTestData)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+app.post('/custom-tests', (req, res) =>{
+  try {
+    var newEntry = req.body
+    var customTestData = getCustomTestData()
+    customTestData.push(newEntry)
+    saveCustomTestData(customTestData);
+    res.status(200).json({ success: true })
+    console.log('custom tests updated successfully')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 app.get('*', function(req, res, next){
   res.status(404).render("404")
 })
@@ -109,6 +133,31 @@ function generatePrompt()
 
   }
   return outputString
+}
+
+var customTestsFilePath = path.join(__dirname, 'customTests.json')
+
+function getCustomTestData() {
+  try {
+    var data = fs.readFileSync(customTestsFilePath, 'utf8')
+
+    if (!data.trim()) {
+      return []
+    }
+
+    return JSON.parse(data)
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+function saveCustomTestData(data) {
+  try {
+    fs.writeFileSync(customTestsFilePath, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 app.listen(port, () => {

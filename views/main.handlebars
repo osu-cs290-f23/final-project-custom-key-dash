@@ -6,6 +6,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="/keydash.js" charset="utf-8" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+    <script src="/customTestTemplate.js" charset="utf-8" defer></script>
   </head>
 
 
@@ -36,31 +38,13 @@
             <div id="sidebar">
                <button class="action-button">Begin Test</button>
                <button id="default-test-button" class="action-button">Default Test</button>
-               <button class="action-button">Submit a Custom Test</button>
-               <button class="action-button">View Leaderboard</button>
+               <button id="add-custom-test-button" class="action-button">Submit a Custom Test</button>
+               <a href="/leaderboard"><button class="action-button">View Leaderboard</button></a>
             </div>
 
         </div>
 
         <div id="custom-tests">
-              <div class="custom-test-box">
-                   <h3 class="custom-test-title">Lorem Ipsum</h3>
-                   <div class="custom-test-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                   </div>
-              </div>
-              <div class="custom-test-box">
-                   <h3 class="custom-test-title">Lorem Ipsum</h3>
-                   <div class="custom-test-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                   </div>
-              </div>
-              <div class="custom-test-box">
-                   <h3 class="custom-test-title">Lorem Ipsum</h3>
-                   <div class="custom-test-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                   </div>
-              </div>
         </div>
 
         <div id="modal-backdrop" class="hidden"></div>

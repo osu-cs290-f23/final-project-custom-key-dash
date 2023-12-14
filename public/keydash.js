@@ -6,7 +6,9 @@ var testResults = document.getElementById("test-results")
 var wpmResult = document.getElementById("wpm-result")
 var wpm = 0
 
+var testTitle = document.getElementById("test-title")
 var testString = ""
+var defaultTest = true
 
 var unattempted = testString
 var correct = ""
@@ -44,11 +46,30 @@ function resetTestElements(){
     unattemptedSpan.classList.remove("hidden")
     correctSpan.classList.remove("hidden")
     incorrectSpan.classList.remove("hidden")
+    document.getElementById("name-input").value = ""
 }
 
 function replayDefaultTest(){
+    defaultTest = true
+    testTitle.textContent = "Default Test"
     generateDefaultTest()
     resetTestElements()
+}
+
+function changeCustomTest(element){
+    defaultTest = false
+    console.log(element.nextElementSibling)
+    testTitle.textContent = element.textContent.trim()
+    testString = element.nextElementSibling.textContent.trim()
+    resetTestElements()
+}
+
+function replayTest(){
+    if(defaultTest){
+        replayDefaultTest()
+    } else {
+        resetTestElements()
+    }
 }
 
 function displayResults(wpm){
@@ -60,16 +81,18 @@ function displayResults(wpm){
 }
 
 function handleTestSubmit(){
-    var username = document.getElementById("name-input").value
-    if(username){
+    var nameInput = document.getElementById("name-input")
+    var username = nameInput.value
+    if(username.trim()){
         uploadTestResults(username,wpm)
+        nameInput.value = ""
     } else {
         alert("Missing name input")
     }
 }
 
 function uploadTestResults(username,wpm){
-    fetch('/leaderboard',{
+    fetch('/leaderboardData',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -80,7 +103,7 @@ function uploadTestResults(username,wpm){
             date: getDateTime()
         })
     }).then(function(){
-        replayDefaultTest()
+        replayTest()
     })
     .catch(function (err){
         alert("Error posting results")
@@ -100,6 +123,7 @@ function checkTestFinish(){
 
 var startTime = 0
 var totalTime = 0
+var allowedChars = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;:\"'[]{}?!@#$%^&*()_1234567890-"
 
 function testUpdate(event){
     if(!testFinished){
@@ -118,7 +142,7 @@ function testUpdate(event){
                 currentTestKey = unattempted[0]
             }
             
-            if(keyCode >= 65 && keyCode <= 90 || keyCode == 32 || keyCode == 222){
+            if(allowedChars.includes(key)){
                 if(key == currentTestKey){
 
                     correct = correct + key
@@ -147,7 +171,22 @@ function testUpdate(event){
     }  
 }
 
-window.addEventListener("keydown",testUpdate)
+window.addEventListener("keydown",function (event){
+    if(isMouseTestHover){
+        testUpdate(event)
+    }
+})
+
+//checking if mouse is over test box to prevent unwanted typing
+var isMouseTestHover = false
+var testBox = document.getElementById("test-box")
+testBox.addEventListener("mouseleave", function (event) {
+    isMouseTestHover = false
+})
+testBox.addEventListener("mouseover", function (event) {
+    isMouseTestHover = true
+})
+
 
 var defaultTestButton = document.getElementById("default-test-button")
 defaultTestButton.addEventListener("click",replayDefaultTest)
@@ -158,6 +197,7 @@ uploadResultButton.addEventListener("click",handleTestSubmit)
 document.addEventListener("DOMContentLoaded", (event) => {
     console.log("DOM fully loaded and parsed")
     generateDefaultTest()
+    displayCustomTests()
 })
     
 
@@ -173,3 +213,86 @@ function getDateTime() {
                 + date.getSeconds();
     return datetime
 }
+
+
+
+
+
+// CUSTOM TESTS
+
+var modalBackdrop = document.getElementById("modal-backdrop")
+var customTestModal = document.getElementById("custom-test-modal")
+var titleInput = document.getElementById("title-input")
+var customTestBody = document.getElementById("custom-test-body")
+
+function displayCustomTests(){
+    var customTestData = []
+    fetch('/custom-tests')
+        .then(res => res.json())
+        .then(data => {
+            customTestData = data
+            customTestData.forEach(elem =>{
+                addCustomTest(elem.title,elem.content)
+            })
+        })
+}
+
+function addCustomTest(title,content){
+    var customTestPreview = Handlebars.templates.customTest({
+        title: title,
+        content: content
+      })
+    var customTestsDiv = document.getElementById("custom-tests")
+    customTestsDiv.insertAdjacentHTML("beforeend",customTestPreview)
+}
+
+function openCustomTestModal(){
+    modalBackdrop.classList.remove("hidden")
+    customTestModal.classList.remove("hidden")
+}
+
+function handleModalAccept(){
+    var title = titleInput.value.trim()
+    var content = customTestBody.value.trim()
+    if(title && content){
+        fetch('/custom-tests',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content
+            })
+        }).then(function(){
+            addCustomTest(title,content)
+        }).then(function(){
+            closeCustomTestModal()
+        })
+        .catch(err =>{
+            alert("Error submitting test")
+        })
+    }else{
+        alert("Missing input(s)")
+    }
+}
+
+function closeCustomTestModal(){
+    modalBackdrop.classList.add("hidden")
+    customTestModal.classList.add("hidden")
+    titleInput.value = ""
+    customTestBody.value = ""
+}
+
+var addCustomTestButton = document.getElementById("add-custom-test-button")
+addCustomTestButton.addEventListener("click",openCustomTestModal)
+
+var modalCancelButton = document.getElementById("modal-cancel")
+var modalCloseButton = document.getElementById("modal-close")
+
+modalCancelButton.addEventListener("click",closeCustomTestModal)
+modalCloseButton.addEventListener("click",closeCustomTestModal)
+
+var modalAcceptButton = document.getElementById("modal-accept")
+
+modalAcceptButton.addEventListener("click",handleModalAccept)
