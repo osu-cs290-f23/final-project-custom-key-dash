@@ -123,7 +123,7 @@ function checkTestFinish(){
 
 var startTime = 0
 var totalTime = 0
-var allowedChars = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;:\"'[]{}?!@#$%^&*()_1234567890-"
+var allowedChars = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;:\"'[]{}\\|?~!@#$%^&*()_`1234567890-"
 
 function testUpdate(event){
     if(!testFinished){
@@ -172,6 +172,9 @@ function testUpdate(event){
 }
 
 window.addEventListener("keydown",function (event){
+    if (event.code === 'Space') {
+        event.preventDefault();
+    }
     if(isMouseTestHover){
         testUpdate(event)
     }
@@ -187,6 +190,8 @@ testBox.addEventListener("mouseover", function (event) {
     isMouseTestHover = true
 })
 
+var replayTestButton = document.getElementById("replay-test-button")
+replayTestButton.addEventListener("click",replayTest)
 
 var defaultTestButton = document.getElementById("default-test-button")
 defaultTestButton.addEventListener("click",replayDefaultTest)
